@@ -1,10 +1,14 @@
 .container {
-  width: 600px;
-  height: 600px;
-  display: grid;
-  border: black 2px solid;
+	width: 600px;
+	height: 600px;
+	display: grid;
+	border: black 2px solid;
 }
 
 .cell {
-  border: lightGrey 1.5px solid;
+	border: lightGrey 1.5px solid;
+}
+
+.snake {
+	background-color: black;
 }
