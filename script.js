@@ -4,24 +4,39 @@ class Snake {
     this.size = size;
     this.x = x;
     this.y = y;
-    this.xs = 1; 
-    this.ys = 1; 
+    this.xs = 0; 
+    this.ys = 0; 
   }
 
   move() {
-
     this.x += this.xs; 
     this.y += this.ys; 
     if (this.x >= 20 || this.x < 0)
       this.x -= this.xs; 
     if (this.y >= 20 || this.y < 0)
       this.y -= this.ys; 
-    
-    
-  } 
+  }
+  
+  right() {
+    this.xs = 0;
+    this.ys = 1;
+  }
+  left() {
+    this.xs = 0;
+    this.ys = -1;
+  }
+  up() {
+    this.xs = -1;
+    this.ys = 0;
+  }
+  down() {
+    this.xs = 1;
+    this.ys = 0;
+  }
 
   show() {
     gameGrid.grid[this.x][this.y] = 's'; 
+    gameFlow.draw();
   }
 
   update() {
@@ -44,9 +59,6 @@ class Grid {
     this.divGrid = DOMStuff.constructGrid(this.size);
   }
 
-  addSnake(x, y) {
-    this.grid[x][y] = "s";
-  }
 }
 
 const DOMStuff = (function() {
@@ -130,11 +142,33 @@ snake = new Snake();
 
 function flow () {
   gameFlow.clear(); 
-  gameGrid.addSnake(snake.x, snake.y); 
   gameFlow.draw(); 
   snake.update();
+  document.onkeydown = checkKey; 
 }
-gameGrid.addSnake(snake.x, snake.y);
 
-setInterval(flow, 1000)
+snake.show(); 
+setInterval(flow, 100);
+// document.onkeydown = checkKey; 
 
+function checkKey (e) {
+  e = e || window.event; 
+  if (e.keyCode == "38") {
+    // up arrow
+    snake.up(); 
+  }
+  else if (e.keyCode == "40"){
+    // down arrow
+    snake.down(); 
+  }
+  else if (e.keyCode == "37"){
+    // left arrow
+    snake.left();
+  }
+  else if (e.keyCode == "39"){
+    // right arrow
+    snake.right();
+  }
+  
+
+}
